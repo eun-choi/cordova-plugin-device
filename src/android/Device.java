@@ -167,8 +167,33 @@ public class Device extends CordovaPlugin {
     }
 
     public boolean isVirtual() {
-	return android.os.Build.FINGERPRINT.contains("generic") ||
-	    android.os.Build.PRODUCT.contains("sdk");
+        String architecture = System.getProperty("os.arch");
+        boolean result = android.os.Build.FINGERPRINT.contains("generic")
+        || android.os.Build.FINGERPRINT.startsWith("generic")
+        || android.os.Build.MODEL.contains("google_sdk")
+        || android.os.Build.MODEL.toLowerCase().contains("droid4x")
+        || android.os.Build.MODEL.contains("Emulator")
+        || android.os.Build.MODEL.contains("Android SDK built for x86")
+        || android.os.Build.MANUFACTURER.contains("Genymotion")
+        || android.os.Build.HARDWARE.equals("goldfish")
+        || android.os.Build.HARDWARE.equals("vbox86")
+        || android.os.Build.HARDWARE.toLowerCase().contains("nox")
+        || android.os.Build.PRODUCT.contains("sdk")
+        || android.os.Build.PRODUCT.equals("sdk")
+        || android.os.Build.PRODUCT.equals("google_sdk")
+        || android.os.Build.PRODUCT.equals("sdk_x86")
+        || android.os.Build.PRODUCT.equals("vbox86p")
+        || android.os.Build.PRODUCT.toLowerCase().contains("windroye")
+        || android.os.Build.PRODUCT.toLowerCase().contains("nox")
+        || android.os.Build.BRAND.toLowerCase().contains("windroy")
+        || android.os.Build.BOARD.toLowerCase().contains("nox")
+        || android.os.Build.BOOTLOADER.toLowerCase().contains("nox")
+        || android.os.Build.SERIAL.toLowerCase().contains("nox")
+        || (android.os.Build.BRAND.startsWith("generic") && android.os.Build.DEVICE.startsWith("generic"))
+        || "google_sdk".equals(android.os.Build.PRODUCT)
+        || architecture.contains("x86")
+        || architecture.contains("i686");
+        return result;
     }
 
 }
